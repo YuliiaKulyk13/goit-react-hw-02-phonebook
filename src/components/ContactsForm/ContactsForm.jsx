@@ -48,7 +48,7 @@ export class ContactsForm extends Component {
             value={this.state.number}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">Add contact</button>
       </form>
     );
   }

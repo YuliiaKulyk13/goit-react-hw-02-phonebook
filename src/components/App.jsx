@@ -21,6 +21,13 @@ export class App extends Component {
       number,
       id: nanoid(),
     };
+
+    // const { contacts } = this.state;
+    // const normalizedFilter = name.toLowerCase();
+    // const checkName = contacts.filter(contact =>
+    //   contact.name.toLowerCase().includes(normalizedFilter)
+    // );
+
     this.state.contacts.find(item => name === item.name)
       ? alert(`${name}is already in contacts.`)
       : this.setState(prevState => {
@@ -41,13 +48,18 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
-  render() {
+  getFilteredContacts = () => {
     const { contacts, filter } = this.state;
-
-    const normalizeFilter = this.state.filter.toLocaleLowerCase();
-    const filteredContacts = this.state.contacts.filter(contact =>
-      contact.text.toLocaleLowerCase().includes(normalizeFilter)
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
+  };
+
+  render() {
+    const { filter } = this.state;
+
+    const filteredContacts = this.getFilteredContacts();
     return (
       <>
         <ContactsForm onSubmit={this.addContact} />
