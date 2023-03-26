@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PhoneContacts from './Phonebook/phonebook';
+import Filter from './Filter/Filter';
+import { ContactsForm } from './ContactsForm/ContactsForm';
+import { nanoid } from 'nanoid';
 
-class App extends Component {
+export class App extends Component {
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -9,13 +12,50 @@ class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    name: '',
+    filter: '',
   };
+
+  addContact = ({ name, number }) => {
+    const contact = {
+      name,
+      number,
+      id: nanoid(),
+    };
+    this.state.contacts.find(item => name === item.name)
+      ? alert(`${name}is already in contacts.`)
+      : this.setState(prevState => {
+          return {
+            contacts: [...prevState.contacts, contact],
+          };
+        });
+    console.log(contact);
+  };
+
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+
+    const normalizeFilter = this.state.filter.toLocaleLowerCase();
+    const filteredContacts = this.state.contacts.filter(contact =>
+      contact.text.toLocaleLowerCase().includes(normalizeFilter)
+    );
     return (
       <>
-        <PhoneContacts contacts={contacts} />
+        <ContactsForm onSubmit={this.addContact} />
+        <Filter value={filter} onChange={this.changeFilter} />
+        <PhoneContacts
+          contacts={filteredContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </>
     );
   }
