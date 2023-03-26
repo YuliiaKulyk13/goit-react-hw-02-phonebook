@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PhoneContacts from './Phonebook/phonebook';
 import Filter from './Filter/Filter';
+import { Title } from './Title/Title';
 import { ContactsForm } from './ContactsForm/ContactsForm';
 import { nanoid } from 'nanoid';
+import { Layout } from './Layout/Layout.styled';
 
 export class App extends Component {
   state = {
@@ -61,15 +63,18 @@ export class App extends Component {
 
     const filteredContacts = this.getFilteredContacts();
     return (
-      <>
+      <Layout>
+        <Title title={'Phonebook'} />
         <ContactsForm onSubmit={this.addContact} />
+
+        <Title title={'Contacts'} />
         <Filter value={filter} onChange={this.changeFilter} />
 
         <PhoneContacts
           contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
         />
-      </>
+      </Layout>
     );
   }
 }

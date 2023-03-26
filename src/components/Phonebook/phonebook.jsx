@@ -1,13 +1,16 @@
 import React from 'react';
+import { Contact, ContactItem, DeleteButton, List } from './phonebook.styled';
 
 const PhoneContacts = ({ contacts, onDeleteContact }) => (
-  <ul>
+  <List>
     {contacts.map(({ id, name, number }) => (
-      <li key={id}>
-        <p>{name}</p>:<span>{number}</span>
-        <button onClick={() => onDeleteContact(id)}>Delete</button>
-      </li>
+      <Contact key={id}>
+        <ContactItem>
+          {name}: {number}
+        </ContactItem>
+        <DeleteButton onClick={() => onDeleteContact(id)}>Delete</DeleteButton>
+      </Contact>
     ))}
-  </ul>
+  </List>
 );
 export default PhoneContacts;

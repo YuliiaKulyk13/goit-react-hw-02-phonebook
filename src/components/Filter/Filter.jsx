@@ -1,9 +1,10 @@
 import React from 'react';
+import { Input, Label } from './Filter.styled';
 
 const Filter = ({ value, onChange }) => (
-  <label>
+  <Label>
     Filter by name
-    <input type="text" value={value} onChange={onChange} />
-  </label>
+    <Input type="text" value={value} onChange={onChange} />
+  </Label>
 );
 export default Filter;
